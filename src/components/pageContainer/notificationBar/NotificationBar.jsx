@@ -3,31 +3,32 @@ import { StyledButton, StyledNotificationBar } from '../../../globalStyles/globa
 import { MdDoneAll } from "react-icons/md";
 
 
-const Button = ( { buttonName = 'customName', Icon } ) => {
+export const Button = ( { buttonName = 'customName', Icon, size, onClick=()=>{}, id } ) => {
     return (
         <>
-            <StyledButton>
+            <StyledButton onClick={onClick} id={id}>
                 {buttonName}
-                {Icon ? <Icon size={20} /> : <></>}
+                {Icon ? <Icon size={size} /> : <></>}
             </StyledButton>
         </>
     )
 }
-export const NotificationBar = ( {counter, GetSetCounterFunction} ) => {
+export const NotificationBar = ( {getNotificationCounter, GetSetCounterFunction} ) => {
     return (
-        <StyledNotificationBar counter={counter} onClick={GetSetCounterFunction}>
+        <StyledNotificationBar counter={getNotificationCounter}>
             <div>
                 <h2>
                     Notifications
                 </h2>
                 <span>
-                    {counter}
+                    {getNotificationCounter}
                 </span>
             </div>
                 <Button
                     Icon={MdDoneAll}
                     buttonName='Mark all as read'
                     onClick={GetSetCounterFunction}
+                    size={20}
                 />
         </StyledNotificationBar>
     );

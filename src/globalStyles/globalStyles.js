@@ -23,7 +23,7 @@ export const StyledContainer = styled.main`
     background-color: ${props => props.theme.primaryLightTheme.bgColorLight};
     box-shadow: 0 0.063rem 0.188rem rgb(31 50 81 / 12%), 0 0.063rem 0.125rem rgb(31 50 81 / 24%);
     border-radius: 20px;
-    padding: 2rem;
+    padding: 1.5rem 1rem;
 `
 
 export const StyledNotificationBar = styled.div`
@@ -38,7 +38,7 @@ export const StyledNotificationBar = styled.div`
         gap: .5rem;
         
         span{
-            background-color: ${props => props.theme.primaryLightTheme.notificationBlue};
+            background-color: ${props => props.theme.primaryLightTheme.newNotificationDarkBlue};
             padding: .3rem;
             border-radius: 5px;
             color: ${props => props.theme.primaryLightTheme.fColor};
@@ -64,14 +64,78 @@ export const StyledButton = styled.button`
     border: none;
     cursor: pointer;
     font-size: 15px;
-    svg{
-        margin-bottom: .2rem;
-    }
+    padding: .1rem;
 `;
 
 export const NotificationWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
 
+`
+export const StyledNotification = styled.div`
+    
+    ul{
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        
+        
+        li{
+            background-color: ${(props) => (props.isRead || props.readAll ? "bgColorLrght" : "#70b5f933")};
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: .6rem 1rem;
+            font-size: 14px;
+            cursor: pointer;
+            
+            span >svg{
+                display: ${(props) => (props.isRead || props.readAll ? "none" : "block")};
+            }
+
+            p{
+                width: 460px;
+            }
+            
+            :hover {
+                background-color: ${(props) => (props.isRead || props.readAll ? "#EBEBEB" : "#D4E9FD")};
+                box-shadow: 0 0.063rem 0.188rem rgb(31 50 81 / 12%), 0 0.063rem 0.125rem rgb(31 50 81 / 24%);
+                transform: translateX(.5rem);
+                transition: transform 0.3s ease-in-out;
+            }
+            
+            img{
+                width: 56px;
+            }
+        }
+    }
+    `
+export const StyledDiv = styled(StyledNotification)`
+    display: flex;
+    gap: 0.5rem;
+    font-size: 12px;
+    align-items: center;
+
+    span{
+        width: 40px;
+    }
+
+    #details{
+        :hover{
+            background-color: ${(props) => (props.isRead ? "#D9D9D9" : "#C3D7E9")};
+            border-radius: 50%;
+        }
+    }
+`
+export const ActiveModal = styled.div`
+    display: flex;
+    align-items: center;
+    height: 40px;
+
+    :hover{
+        background-color: ${(props) => props.theme.primaryLightTheme.brownGray};
+    }
 `
