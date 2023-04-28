@@ -1,7 +1,8 @@
 import React from 'react'
+import { StyledContainer } from '../../globalStyles/globalStyles'
 
-export const PageContainer = () => {
+export const PageContainer = ( {children} ) => {
   return (
-    <div>PageContainer</div>
+    <StyledContainer>{children}</StyledContainer>
   )
 }
