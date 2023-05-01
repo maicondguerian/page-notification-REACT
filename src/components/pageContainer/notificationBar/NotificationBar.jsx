@@ -15,7 +15,7 @@ export const Button = ( { buttonName = 'custonName', Icon, size, onClick=()=>{},
 };
 
 
-export const NotificationBar = ( {getNotificationCounter, GetSetCounterFunction} ) => {
+export const NotificationBar = ( {getNotificationCounter, GetSetCounterFunction, getRemoveAllFunction} ) => {
   
 
     return (
@@ -33,6 +33,10 @@ export const NotificationBar = ( {getNotificationCounter, GetSetCounterFunction}
                     buttonName={'Mark all as read'}
                     onClick={GetSetCounterFunction}
                     size={20}
+                />
+                <Button 
+                    buttonName='Remove all'
+                    onClick={getRemoveAllFunction}
                 />
         </StyledNotificationBar>
     );

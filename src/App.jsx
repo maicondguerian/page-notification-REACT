@@ -10,7 +10,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyles/>
       <PageContainer>
-        <Notifications />
+        <Notifications/>
       </PageContainer>
     </ThemeProvider>
   )

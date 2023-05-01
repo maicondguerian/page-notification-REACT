@@ -68,15 +68,24 @@ export const Notifications = () => {
     const handleNotificationCounter = () => {
         setReadAll(true);
         console.log(readAll);
+    };
+
+    const handleDeleteAll = (id) => {
+        const newList = [...notifications];
+        newList.splice(id, 7);
+        setNotifications(newList);
+        setNotificationCounter(newList.length);
+        setReplyMessage(false);
     }
 
     return (
         <NotificationWrapper>
             <NotificationBar
+                getRemoveAllFunction={handleDeleteAll}
                 getNotificationCounter={notificationCounter}
                 GetSetCounterFunction={handleNotificationCounter}
             />
-             {notifications.length  === 0 ? <p>Nenhuma notificação para exibir</p> : <></>}
+            {notifications.length  === 0 ? <p>Nenhuma notificação para exibir</p> : <></>}
             {notifications.map((notify, index) => (
                 <Notification
                     getReadAllFunciton={readAll}
@@ -89,11 +98,11 @@ export const Notifications = () => {
                 />
             ))}
         </NotificationWrapper>
-    )
-}
+    );
+};
 
 
-const Notification = ({ notify, index, getItemList, getFunction, getsetNotificationCounter, id, getReadAllFunciton }) => {
+const Notification = ( { notify, index, getItemList, getFunction, getsetNotificationCounter, id, getReadAllFunciton,  } ) => {
     const [showModal, setShowModal] = useState(false);
     const [isRead, setIsread] = useState(false);
     const [replyMessage, setReplyMessage] = useState(false);
@@ -107,7 +116,6 @@ const Notification = ({ notify, index, getItemList, getFunction, getsetNotificat
         setTimeLeft(5)
     }
 
-    
     const handlereplyComment = () => {
         setReplyMessage(true);
     };
@@ -131,7 +139,7 @@ const Notification = ({ notify, index, getItemList, getFunction, getsetNotificat
                         return prevTime - 1;
                     } else {
                         clearInterval(interval);
-                        return 'excluir'
+                        return 'Remove'
                     }
                 });
             }, 1000);
@@ -145,7 +153,6 @@ const Notification = ({ notify, index, getItemList, getFunction, getsetNotificat
             readAll={getReadAllFunciton}
             onClick={handleIsRead}
             isRead={isRead}
-            
         >
             <ul>
                 <li key={index}>
@@ -170,38 +177,32 @@ const Notification = ({ notify, index, getItemList, getFunction, getsetNotificat
                                     isOpen={showModal}
                                     >
                                     <ActiveModalWrapper>
-                                        <span>
-                                            <Button
-                                                onClick={() => {
-                                                    if(timeLeft === 'excluir'){
-                                                        handleDeleteItem(id)}}
-                                                    }
-                                                    Icon={BsTrash3Fill}
-                                                    size={19}
-                                                    buttonName={timeLeft}
-                                                    disabled={timeLeft !== 'excluir'}
-                                            />
-                                        </span>
-                                        <span>
-                                            <Button
-                                                onClick={handlereplyComment}
-                                                Icon={BsFillReplyFill}
-                                                size={22}
-                                                buttonName={'Reply'}
-                                                
-                                                />
-                                        </span>
+                                        <Button
+                                        onClick={() => {
+                                            if(timeLeft === 'Remove'){
+                                                handleDeleteItem(id)}}
+                                            }
+                                            Icon={BsTrash3Fill}
+                                            size={19}
+                                            buttonName={timeLeft}
+                                            disabled={timeLeft !== 'Remove'}
+                                        />
+                                        <Button
+                                            onClick={handlereplyComment}
+                                            Icon={BsFillReplyFill}
+                                            size={22}
+                                            buttonName={'Reply'}
+                                        />
                                     </ActiveModalWrapper>
                                 </ActionModal>
                             </>
                     </StyledDiv>
                 </li>
-                    {replyMessage && (
-                        <ReplyComment id={'comment'} isOpen={replyMessage} 
-                            getFunction={()=> setReplyMessage(false)}
-                        />
-                    
-                    )}
+                {replyMessage && (
+                    <ReplyComment id={'comment'} isOpen={replyMessage} 
+                        getFunction={()=> setReplyMessage(false)}
+                    />
+                )}
             </ul>
         </StyledNotification>
     );

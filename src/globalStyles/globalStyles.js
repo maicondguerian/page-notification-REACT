@@ -161,21 +161,17 @@ export const ActiveModalWrapper = styled.div`
     height: 100%;
     flex-direction: column;
     
-   span{
+   button{
         width: 100%;
         height: 100%;
+        color: ${({ theme }) => theme.primaryLightTheme.coolBlue};
+        width: 100%;
+        height: 100%;
+        font-size: 13px;
 
         :hover{
-        background-color: ${(props) => props.theme.primaryLightTheme.brownGray};
-    }
-
-        button{
-            width: 100%;
-            height: 100%;
-            font-size: 13px;
-            color: ${({ theme }) => theme.primaryLightTheme.coolBlue};
-        }
-   }
-
+            background-color: ${(props) => props.theme.primaryLightTheme.brownGray};
+        };
+    };
     
 `
