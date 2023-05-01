@@ -65,6 +65,7 @@ export const StyledButton = styled.button`
     cursor: pointer;
     font-size: 15px;
     padding: .1rem;
+
 `;
 
 export const NotificationWrapper = styled.div`
@@ -74,13 +75,28 @@ export const NotificationWrapper = styled.div`
 
 `
 export const StyledNotification = styled.div`
-    
+    .modalOn {
+  animation-name: modalOn;
+  animation-duration: .3s;
+}
+
+@keyframes modalOn {
+    from {
+    opacity: 0;
+    transform: translateY(-70%);
+  }
+    to {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+}
     ul{
         list-style: none;
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        
+
+       
         
         li{
             background-color: ${(props) => (props.isRead || props.readAll ? "bgColorLrght" : "#70b5f933")};
@@ -91,6 +107,7 @@ export const StyledNotification = styled.div`
             padding: .6rem 1rem;
             font-size: 14px;
             cursor: pointer;
+            position: relative;
             
             span >svg{
                 display: ${(props) => (props.isRead || props.readAll ? "none" : "block")};
@@ -110,6 +127,12 @@ export const StyledNotification = styled.div`
             img{
                 width: 56px;
             }
+
+            #comment{
+                background-color: red;
+                top: 0;
+                left: 0;
+        }
         }
     }
     `
@@ -118,6 +141,8 @@ export const StyledDiv = styled(StyledNotification)`
     gap: 0.5rem;
     font-size: 12px;
     align-items: center;
+
+    
 
     span{
         width: 40px;
@@ -130,12 +155,27 @@ export const StyledDiv = styled(StyledNotification)`
         }
     }
 `
-export const ActiveModal = styled.div`
+export const ActiveModalWrapper = styled.div`
     display: flex;
     align-items: center;
-    height: 40px;
+    height: 100%;
+    flex-direction: column;
+    
+   span{
+        width: 100%;
+        height: 100%;
 
-    :hover{
+        :hover{
         background-color: ${(props) => props.theme.primaryLightTheme.brownGray};
     }
+
+        button{
+            width: 100%;
+            height: 100%;
+            font-size: 13px;
+            color: ${({ theme }) => theme.primaryLightTheme.coolBlue};
+        }
+   }
+
+    
 `

@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, NotificationBar } from '../pageContainer/notificationBar/NotificationBar'
-import { ActiveModal, NotificationWrapper, StyledDiv, StyledNotification } from '../../globalStyles/globalStyles'
+import { ActiveModalWrapper, NotificationWrapper, StyledDiv, StyledNotification } from '../../globalStyles/globalStyles'
 import { MdFiberNew } from "react-icons/md";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
 import { ActionModal } from '../modal/ActionModal';
 import { BsTrash3Fill, BsFillReplyFill } from "react-icons/bs";
+import { ReplyComment } from '../replyModal/replyComment';
 
 
-export const Notifications = ({onDelete, notify}) => {
+export const Notifications = () => {
     const [notifications, setNotifications] = useState([
         {
             id: 1,
@@ -73,13 +74,15 @@ export const Notifications = ({onDelete, notify}) => {
                 getNotificationCounter={notificationCounter}
                 GetSetCounterFunction={handleNotificationCounter}
             />
-            {notifications.map((notify, index)=>(
+             {notifications.length  === 0 ? <p>Nenhuma notificação para exibir</p> : <></>}
+            {notifications.map((notify, index) => (
                 <Notification
                     getsetNotificationCounter={setNotificationCounter}
                     getFunction={setNotifications}
                     getItemList={notifications}
                     notify={notify}
                     key={index}
+                    id={notify.index}
                 />
             ))}
         </NotificationWrapper>
@@ -87,28 +90,62 @@ export const Notifications = ({onDelete, notify}) => {
 }
 
 
-const Notification = ( {notify, index, getItemList, getFunction, getsetNotificationCounter} ) =>{
-    const [showModal, setShowModal] =useState(false);
+const Notification = ({ notify, index, getItemList, getFunction, getsetNotificationCounter, id }) => {
+    const [showModal, setShowModal] = useState(false);
     const [isRead, setIsread] = useState(false);
+    const [replyMessage, setReplyMessage] = useState(false);
 
     const handleIsRead = () => {
         setIsread(true);
     }
+    
+    const handlerOpenModal = () => {
+        setShowModal(true);
+        setTimeLeft(0)
+    }
 
-    const handleDeleteItem = (index) =>{
+    
+    const handlereplyComment = () => {
+        setReplyMessage(true);
+    };
+    
+    const handleDeleteItem = (id) => {
         const newList = [...getItemList];
-        newList.splice(index, 1);
+        newList.splice(id === 0 ? 1 : 0, 1);
         getFunction(newList);
         getsetNotificationCounter(newList.length);
+        setReplyMessage(false);
     }
-    return(
+    
+    const [timeLeft, setTimeLeft] = useState(null);
+    
+    useEffect(() => {
+        let interval
+        if (showModal) {
+            interval = setInterval(() => {
+                setTimeLeft(prevTime => {
+                    if (prevTime > 1) {
+                        return prevTime - 1;
+                    } else {
+                        clearInterval(interval);
+                        return 'excluir'
+                    }
+                });
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [showModal]);
+    
+
+    return (
         <StyledNotification
             onClick={handleIsRead}
             isRead={isRead}
+            sh
         >
             <ul>
                 <li key={index}>
-                    <span><MdFiberNew size={27} fill='#0a317b'/></span>
+                    <span><MdFiberNew size={27} fill='hsl(231, 51%, 33%)' /></span>
                     <img src={notify.avatar} alt="" />
                     <p>{notify.user} {notify.description} </p>
                     <StyledDiv
@@ -120,25 +157,48 @@ const Notification = ( {notify, index, getItemList, getFunction, getsetNotificat
                             Icon={HiEllipsisHorizontal}
                             size={30}
                             buttonName=''
-                            onClick={()=>setShowModal(true)}                               
+                            onClick={handlerOpenModal}
                         />
-                        {showModal && (
                             <>
-                                <ActionModal onClick={()=>setShowModal(false)}>
-                                    <ActiveModal onClick={handleDeleteItem}>
-                                        <span> 
+                                <ActionModal
+                                    onClick={() => setShowModal(false)}
+                                    getModalStatus={showModal}
+                                    isOpen={showModal}
+                                    >
+                                    <ActiveModalWrapper>
+                                        <span>
                                             <Button
-                                                Icon={BsTrash3Fill}
-                                                onClick={handleDeleteItem}
+                                                onClick={() => {
+                                                    if(timeLeft === 'excluir'){
+                                                        handleDeleteItem(id)}}
+                                                    }
+                                                    Icon={BsTrash3Fill}
+                                                    size={19}
+                                                    buttonName={timeLeft}
+                                                    disabled={timeLeft !== 'excluir'}
                                             />
                                         </span>
-                                    </ActiveModal>
+                                        <span>
+                                            <Button
+                                                onClick={handlereplyComment}
+                                                Icon={BsFillReplyFill}
+                                                size={22}
+                                                buttonName={'Reply'}
+                                                
+                                                />
+                                        </span>
+                                    </ActiveModalWrapper>
                                 </ActionModal>
                             </>
-                        )}
                     </StyledDiv>
                 </li>
+                {console.log(getItemList.length )}
+                    {replyMessage && (
+                        <ReplyComment id={'comment'} isOpen={replyMessage}>
+                        ddfffffffffffffffffffffff
+                    </ReplyComment>
+                    )}
             </ul>
-       </StyledNotification>
+        </StyledNotification>
     );
 };

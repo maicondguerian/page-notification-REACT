@@ -6,7 +6,7 @@ const StyledModal = styled.div`
   right: 0;
   height: 110px;
   width: 260px;
-  padding: 1rem 0;
+  padding: .5rem 0;
   border-bottom-left-radius:10px ;
   border-top-left-radius:10px ;
   border-bottom-right-radius:10px ;
@@ -16,10 +16,14 @@ const StyledModal = styled.div`
   opacity: 0.95;
 `;
 
-export const ActionModal = ( {children, onClick=()=>{}, getModalStatus} ) => {
+export const ActionModal = ( {children, onClick=()=>{}, getModalStatus, isOpen, id} ) => {
   return (
-    <StyledModal onClick={onClick} className={getModalStatus ? "modalOn" : "modalOff"}>
-      {children}
-    </StyledModal>
+    <>
+      {isOpen && (
+        <StyledModal id={id} onClick={onClick} className={getModalStatus ? "modalOn" : "modalOff"}>
+        {children}
+        </StyledModal>
+      )}
+    </>
   )
 }
