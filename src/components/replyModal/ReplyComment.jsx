@@ -46,15 +46,16 @@ const CommentReplyWrapper = styled.div`
         width: 15%;
     }
 `
-export const ReplyComment = ({ isOpen }) => {
+export const ReplyComment = ({ isOpen, onClick= ()=>{}, getFunction }) => {
   return (
-    <CommentReplyWrapper isOpen={isOpen}>
+    <CommentReplyWrapper isOpen={isOpen} onClick={onClick} getFunction={getFunction}>
         <div>
             <img src='/111819901.jpg' alt="" />
         </div>
         <input placeholder='Add comment...'/>
         <Button 
             buttonName='send'
+            onClick={getFunction}
         />
       
     </CommentReplyWrapper>

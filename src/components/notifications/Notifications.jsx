@@ -63,9 +63,11 @@ export const Notifications = () => {
     ]);
 
     const [notificationCounter, setNotificationCounter] = useState(notifications.length);
+    const [readAll, setReadAll] = useState(false);
 
     const handleNotificationCounter = () => {
-        setNotificationCounter((prevState) => prevState - 1);
+        setReadAll(true);
+        console.log(readAll);
     }
 
     return (
@@ -77,6 +79,7 @@ export const Notifications = () => {
              {notifications.length  === 0 ? <p>Nenhuma notificação para exibir</p> : <></>}
             {notifications.map((notify, index) => (
                 <Notification
+                    getReadAllFunciton={readAll}
                     getsetNotificationCounter={setNotificationCounter}
                     getFunction={setNotifications}
                     getItemList={notifications}
@@ -90,7 +93,7 @@ export const Notifications = () => {
 }
 
 
-const Notification = ({ notify, index, getItemList, getFunction, getsetNotificationCounter, id }) => {
+const Notification = ({ notify, index, getItemList, getFunction, getsetNotificationCounter, id, getReadAllFunciton }) => {
     const [showModal, setShowModal] = useState(false);
     const [isRead, setIsread] = useState(false);
     const [replyMessage, setReplyMessage] = useState(false);
@@ -139,9 +142,10 @@ const Notification = ({ notify, index, getItemList, getFunction, getsetNotificat
 
     return (
         <StyledNotification
+            readAll={getReadAllFunciton}
             onClick={handleIsRead}
             isRead={isRead}
-            sh
+            
         >
             <ul>
                 <li key={index}>
@@ -192,11 +196,11 @@ const Notification = ({ notify, index, getItemList, getFunction, getsetNotificat
                             </>
                     </StyledDiv>
                 </li>
-                {console.log(getItemList.length )}
                     {replyMessage && (
-                        <ReplyComment id={'comment'} isOpen={replyMessage}>
-                        ddfffffffffffffffffffffff
-                    </ReplyComment>
+                        <ReplyComment id={'comment'} isOpen={replyMessage} 
+                            getFunction={()=> setReplyMessage(false)}
+                        />
+                    
                     )}
             </ul>
         </StyledNotification>
