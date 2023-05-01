@@ -75,7 +75,6 @@ export const Notifications = () => {
         newList.splice(id, 7);
         setNotifications(newList);
         setNotificationCounter(newList.length);
-        setReplyMessage(false);
     }
 
     return (
