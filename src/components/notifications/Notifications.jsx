@@ -101,7 +101,7 @@ const Notification = ({ notify, index, getItemList, getFunction, getsetNotificat
     
     const handlerOpenModal = () => {
         setShowModal(true);
-        setTimeLeft(0)
+        setTimeLeft(5)
     }
 
     
