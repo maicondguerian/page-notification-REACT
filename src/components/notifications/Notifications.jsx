@@ -72,7 +72,7 @@ export const Notifications = () => {
 
     const handleDeleteAll = (id) => {
         const newList = [...notifications];
-        newList.splice(id, 7);
+        newList.splice(id, newList.length);
         setNotifications(newList);
         setNotificationCounter(newList.length);
     }
@@ -101,7 +101,7 @@ export const Notifications = () => {
 };
 
 
-const Notification = ( { notify, index, getItemList, getFunction, getsetNotificationCounter, id, getReadAllFunciton,  } ) => {
+const Notification = ( { notify, index, getItemList, getFunction, getsetNotificationCounter, id, getReadAllFunciton } ) => {
     const [showModal, setShowModal] = useState(false);
     const [isRead, setIsread] = useState(false);
     const [replyMessage, setReplyMessage] = useState(false);
@@ -121,7 +121,7 @@ const Notification = ( { notify, index, getItemList, getFunction, getsetNotifica
     
     const handleDeleteItem = (id) => {
         const newList = [...getItemList];
-        newList.splice(id === 0 ? 1 : 0, 1);
+        newList.splice(id, 1);
         getFunction(newList);
         getsetNotificationCounter(newList.length);
         setReplyMessage(false);
@@ -157,10 +157,10 @@ const Notification = ( { notify, index, getItemList, getFunction, getsetNotifica
                 <li key={index}>
                     <span><MdFiberNew size={27} fill='hsl(231, 51%, 33%)' /></span>
                     <img src={notify.avatar} alt="" />
-                    <p>{notify.user} {notify.description} </p>
+                    <p><a href="#">{notify.user}</a> {notify.description} </p>
                     <StyledDiv
                         isRead={isRead}
-                    >
+                        >
                         <span>{notify.timeAgo}</span>
                         <Button
                             id={'details'}
@@ -168,7 +168,7 @@ const Notification = ( { notify, index, getItemList, getFunction, getsetNotifica
                             size={30}
                             buttonName=''
                             onClick={handlerOpenModal}
-                        />
+                            />
                             <>
                                 <ActionModal
                                     onClick={() => setShowModal(false)}
@@ -182,23 +182,25 @@ const Notification = ( { notify, index, getItemList, getFunction, getsetNotifica
                                                 handleDeleteItem(id)}}
                                             }
                                             Icon={BsTrash3Fill}
-                                            size={19}
+                                            size={17}
                                             buttonName={timeLeft}
                                             disabled={timeLeft !== 'Remove'}
-                                        />
+                                            />
                                         <Button
                                             onClick={handlereplyComment}
                                             Icon={BsFillReplyFill}
-                                            size={22}
+                                            size={20}
                                             buttonName={'Reply'}
-                                        />
+                                            />
                                     </ActiveModalWrapper>
                                 </ActionModal>
                             </>
                     </StyledDiv>
                 </li>
                 {replyMessage && (
-                    <ReplyComment id={'comment'} isOpen={replyMessage} 
+                    <ReplyComment 
+                        id={'comment'} 
+                        isOpen={replyMessage} 
                         getFunction={()=> setReplyMessage(false)}
                     />
                 )}

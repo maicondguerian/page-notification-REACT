@@ -96,7 +96,11 @@ export const StyledNotification = styled.div`
         flex-direction: column;
         gap: 1rem;
 
-       
+       a{
+            text-decoration: none;
+            font-weight: 700;
+            color: inherit;
+       }
         
         li{
             background-color: ${(props) => (props.isRead || props.readAll ? "bgColorLrght" : "#70b5f933")};
@@ -106,7 +110,7 @@ export const StyledNotification = styled.div`
             gap: 1rem;
             padding: .6rem 1rem;
             font-size: 14px;
-            cursor: pointer;
+      
             position: relative;
             
             span >svg{
@@ -126,6 +130,7 @@ export const StyledNotification = styled.div`
             
             img{
                 width: 56px;
+                cursor: pointer;
             }
 
             #comment{
