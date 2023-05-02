@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button } from '../pageContainer/notificationBar/NotificationBar'
+import img from '/111819901.jpg'
 
 const CommentReplyWrapper = styled.div`
     display: flex;
@@ -50,7 +51,7 @@ export const ReplyComment = ({ isOpen, onClick= ()=>{}, getFunction }) => {
   return (
     <CommentReplyWrapper isOpen={isOpen} onClick={onClick} getFunction={getFunction}>
         <div>
-            <img src='/111819901.jpg' alt="" />
+            <img src={img} alt="" />
         </div>
         <input placeholder='Add comment...'/>
         <Button 
